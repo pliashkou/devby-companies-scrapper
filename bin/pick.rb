@@ -7,10 +7,7 @@ COMPANIES_PAGE = 'https://companies.dev.by/'
 
 agent = Mechanize.new
 
-titles = []
-
 agent.get(COMPANIES_PAGE) do |page|
-  require 'pry'; binding.pry
   page.search('.companies tbody tr').each do |tr|
     title_link = tr.at('td:first-of-type a')
     title          = title_link.text
@@ -34,12 +31,23 @@ agent.get(COMPANIES_PAGE) do |page|
 
     address = nil
     company_page.at('.info-ofice').tap do |location_section|
+      break if location_section.nil?
       address_span = location_section.at('.street-address')
       address = address_span.text unless address_span.nil?
     end
 
 
+    company_page.search('.widget-companies-agents li').each do |representative|
+      rep_fullname = representative.at('i.icon-dev-hr + a').text
 
+      email_link = representative.at('.a-link')
+      rep_email    = email_link.nil? ? nil : email_link.text
 
+      rep_name = representative.at('strong').text
+      rep_position = representative.at('strong + span').text
+
+      phone_span = representative.at(':last-child span')
+      phone = phone_span.nil? ? nil : phone_span.text
+    end
   end
 end
