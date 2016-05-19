@@ -1,6 +1,7 @@
 # encoding: utf-8
-require 'roo'
+require 'simple_xlsx'
 require 'mechanize'
+require 'csv'
 
 COMPANIES_PAGE = 'https://companies.dev.by/'
 
@@ -53,11 +54,20 @@ agent.get(COMPANIES_PAGE) do |page|
       end
       representatives << representative
     end
-
     company[:representatives] = representatives
+
     companies << company
   end
 end
 
-require 'awesome_print'
-ap companies
+str = CSV.generate do |csv|
+  companies.each do |company|
+    info = company.values_at(:name, :employees_count, :website, :email, :address, :phone)
+    unless company[:representatieves].nil?
+      info << company[:representatieves].map { |r| r.values_at(:fullname, :position, :email, :phone) }.flatten
+    end
+    info.map! { |a| a ? a.gsub("\n", '') : nil }
+    csv << info
+  end
+end
+File.write('test.csv', str)

@@ -5,6 +5,7 @@ GEM
     coderay (1.1.1)
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
+    fast_xs (0.8.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     mechanize (2.7.4)
@@ -28,15 +29,17 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    roo (2.3.2)
-      nokogiri (~> 1)
-      rubyzip (~> 1.1, < 2.0.0)
     rubyzip (1.2.0)
+    simple_xlsx_writer (0.5.3)
+      fast_xs (>= 0.7.3)
+      rubyzip (>= 0.9.4)
     slop (3.6.0)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
     webrobots (0.1.2)
+    zip-zip (0.3)
+      rubyzip (>= 1.0.0)
 
 PLATFORMS
   ruby
@@ -45,7 +48,9 @@ DEPENDENCIES
   awesome_print
   mechanize (~> 2.7, >= 2.7.4)
   pry
-  roo (~> 2.3, >= 2.3.2)
+  rubyzip
+  simple_xlsx_writer (~> 0.5.3)
+  zip-zip
 
 BUNDLED WITH
-   1.11.2
+   1.12.4
